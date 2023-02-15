@@ -4,6 +4,7 @@ import javax.sql.DataSource;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.SneakyThrows;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -51,46 +52,47 @@ public class CustomDataSource implements DataSource {
 
         return instance;
     }
+    @SneakyThrows
     @Override
     public Connection getConnection() throws SQLException {
         return new CustomConnector().getConnection(url, name, password);
     }
-
+    @SneakyThrows
     @Override
     public Connection getConnection(String username, String password) throws SQLException {
         return new CustomConnector().getConnection(url, username, password);
     }
-
+    @SneakyThrows
     @Override
     public PrintWriter getLogWriter() throws SQLException {
         return null;
     }
-
+    @SneakyThrows
     @Override
     public void setLogWriter(PrintWriter out) throws SQLException {
 
     }
-
+    @SneakyThrows
     @Override
     public void setLoginTimeout(int seconds) throws SQLException {
 
     }
-
+    @SneakyThrows
     @Override
     public int getLoginTimeout() throws SQLException {
         return 0;
     }
-
+    @SneakyThrows
     @Override
     public Logger getParentLogger() throws SQLFeatureNotSupportedException {
         return null;
     }
-
+    @SneakyThrows
     @Override
     public <T> T unwrap(Class<T> iface) throws SQLException {
         return null;
     }
-
+    @SneakyThrows
     @Override
     public boolean isWrapperFor(Class<?> iface) throws SQLException {
         return false;

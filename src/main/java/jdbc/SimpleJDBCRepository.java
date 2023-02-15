@@ -23,23 +23,24 @@ public class SimpleJDBCRepository {
     private static final String findUserByIdSQL = "SELECT * FROM myusers WHERE id = ?";
     private static final String findUserByNameSQL = "SELECT * FROM myusers WHERE firstname = ?";
     private static final String findAllUserSQL = "SELECT * FROM myusers";
-    @SneakyThrows
+
     public Long createUser(User user) throws SQLException {
         long id = 0;
         connection = CustomDataSource.getInstance().getConnection();
         ps = connection.prepareStatement(createUserSQL);
-        ps.setString(1, user.getFirstName());
-        ps.setString(2, user.getLastName());
-        ps.setInt(3, user.getAge());
-        ps.execute();
+            ps.setString(1, user.getFirstName());
+            ps.setString(2, user.getLastName());
+            ps.setInt(3, user.getAge());
+            ps.execute();
 
-        ResultSet resultSet = ps.getGeneratedKeys();
-        if (resultSet.next()){
-            id = resultSet.getLong(1);
-        }
+            ResultSet resultSet = ps.getGeneratedKeys();
+            if (resultSet.next()) {
+                id = resultSet.getLong(1);
+            }
+
         return id;
     }
-    @SneakyThrows
+
     public User findUserById(Long userId) throws SQLException {
         connection = CustomDataSource.getInstance().getConnection();
         ps = connection.prepareStatement(findUserByIdSQL);
@@ -55,7 +56,7 @@ public class SimpleJDBCRepository {
         }
         return user;
     }
-    @SneakyThrows
+
     public User findUserByName(String userName) throws SQLException {
         connection = CustomDataSource.getInstance().getConnection();
         ps = connection.prepareStatement(findUserByNameSQL);
@@ -69,7 +70,7 @@ public class SimpleJDBCRepository {
         user.setAge(resultSet.getInt("age"));
         return user;
     }
-    @SneakyThrows
+
     public List<User> findAllUser() throws SQLException {
         List<User> list = new ArrayList<>();
         connection = CustomDataSource.getInstance().getConnection();
@@ -81,7 +82,7 @@ public class SimpleJDBCRepository {
         }
         return list;
     }
-    @SneakyThrows
+
     public User updateUser(User user) throws SQLException {
         connection = CustomDataSource.getInstance().getConnection();
         ps = connection.prepareStatement(updateUserSQL);
@@ -92,7 +93,7 @@ public class SimpleJDBCRepository {
         ps.executeUpdate();
         return user;
     }
-    @SneakyThrows
+
     public void deleteUser(Long userId) throws SQLException {
         connection = CustomDataSource.getInstance().getConnection();
         ps = connection.prepareStatement(deleteUser);

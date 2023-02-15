@@ -1,7 +1,6 @@
 package jdbc;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -9,6 +8,8 @@ import java.util.List;
 
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
 
 public class SimpleJDBCRepository {
 
@@ -22,7 +23,7 @@ public class SimpleJDBCRepository {
     private static final String findUserByIdSQL = "SELECT * FROM myusers WHERE id = ?";
     private static final String findUserByNameSQL = "SELECT * FROM myusers WHERE firstname = ?";
     private static final String findAllUserSQL = "SELECT * FROM myusers";
-
+    @SneakyThrows
     public Long createUser(User user) throws SQLException {
         long id = 0;
         connection = CustomDataSource.getInstance().getConnection();
@@ -38,7 +39,7 @@ public class SimpleJDBCRepository {
         }
         return id;
     }
-
+    @SneakyThrows
     public User findUserById(Long userId) throws SQLException {
         connection = CustomDataSource.getInstance().getConnection();
         ps = connection.prepareStatement(findUserByIdSQL);
@@ -54,7 +55,7 @@ public class SimpleJDBCRepository {
         }
         return user;
     }
-
+    @SneakyThrows
     public User findUserByName(String userName) throws SQLException {
         connection = CustomDataSource.getInstance().getConnection();
         ps = connection.prepareStatement(findUserByNameSQL);
@@ -68,7 +69,7 @@ public class SimpleJDBCRepository {
         user.setAge(resultSet.getInt("age"));
         return user;
     }
-
+    @SneakyThrows
     public List<User> findAllUser() throws SQLException {
         List<User> list = new ArrayList<>();
         connection = CustomDataSource.getInstance().getConnection();
@@ -80,7 +81,7 @@ public class SimpleJDBCRepository {
         }
         return list;
     }
-
+    @SneakyThrows
     public User updateUser(User user) throws SQLException {
         connection = CustomDataSource.getInstance().getConnection();
         ps = connection.prepareStatement(updateUserSQL);
@@ -91,7 +92,7 @@ public class SimpleJDBCRepository {
         ps.executeUpdate();
         return user;
     }
-
+    @SneakyThrows
     public void deleteUser(Long userId) throws SQLException {
         connection = CustomDataSource.getInstance().getConnection();
         ps = connection.prepareStatement(deleteUser);
